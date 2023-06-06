@@ -18,10 +18,10 @@ def get_session_cookie(username, password, domain):
     # Create new session
     session = requests.Session()
 
-    # Set up headers
+    # Set up header
     headers = {
         "Origin": "http://localhost",
-        "Accept-Version": "v5.x",
+        "Accept-Version": "v5.0",
         "Content-Type": "application/json"
     }
 
@@ -40,4 +40,4 @@ def get_session_cookie(username, password, domain):
     else:
         print(f"\n\033[31mFailed to create session. STATUS CODE: {response.status_code}\033[0m")
 
-    return cookie
+    return session, headers
