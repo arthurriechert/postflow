@@ -1,4 +1,4 @@
-def get_post(slug: str, session, headers):
+def get_post(slug: str, session, headers, domain: str):
     """
     Obtains content from a ghost page
     
@@ -6,6 +6,7 @@ def get_post(slug: str, session, headers):
         session (Session): Verified session instance
         slug (str): Page name
         headers (json): Important information for getting requests
+        domain (str): Domain of the ghost blog, excluding .ext
 
     Returns:
         data (json): Data from the page
@@ -13,7 +14,7 @@ def get_post(slug: str, session, headers):
     """
 
     # Build URL with slug
-    url = f"https://cybrco.ghost.io/ghost/api/admin/posts/slug/{slug}"
+    url = f"https://{domain}.ghost.io/ghost/api/admin/posts/slug/{slug}"
 
     # Get the post
     post = session.get(url, headers=headers)
