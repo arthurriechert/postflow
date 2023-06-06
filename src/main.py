@@ -1,2 +1,5 @@
+from ghost.manager import GhostManager
+
 if __name__ == "__main__":
-    pass
+    
+    ghost_manager = GhostManager()
