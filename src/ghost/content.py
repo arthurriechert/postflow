@@ -135,7 +135,7 @@ def get_slugs(session, headers, domain: str):
     
     return slugs
 
-def get_slugs(session, headers, domain: str):
+def get_titles(session, headers, domain: str):
     """
     Gets a list of titles to send to ChatGPT
 
