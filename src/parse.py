@@ -1,3 +1,44 @@
+import json as js
+
+def str_to_json(string: str):
+    """
+    Converts a string to json format
+
+    Args:
+        string (str): Takes a string with json formatting
+
+    Returns:
+        json_
+
+    """
+
+    # Load using json
+    json = js.loads(string)
+
+    return json
+
+def list_to_str(list_: list):
+    """
+    Converts a list to a string
+
+    Args:
+        list_ (list): Any flattened list to be converted
+
+    Returns:
+        string (str): A string version of the list
+
+    """
+
+    string = ""
+
+    # Iterate and concat
+    for element in list_:
+        string += element
+
+    print(string)
+
+    return string
+
 def parse_json(json, keys):
     """
     Returns a list containing based on desired keys

@@ -1,4 +1,4 @@
-from parse import parse_json
+from parse import parse_json, str_to_json, list_to_str, flatten
 
 def get_steps(goal: str, model):
     """
@@ -123,7 +123,7 @@ def get_new_idea(description: str, current: str, model):
 
                 f"""
                 Give me a json based on this description of my blog:
-                {description)
+                {description}
 
                 Avoid overlap with this current list of articles:
                 {current}
@@ -137,7 +137,16 @@ def get_new_idea(description: str, current: str, model):
     # Parse output
     idea = parse_json(idea, "content") 
 
+    # Flatten list
+    idea = flatten(idea)
+
+    print(idea)
+
+    # Convert a list to a string
+    idea = list_to_str(idea)
+
     # Convert to json
+    idea = str_to_json(idea)
 
     return idea
 
