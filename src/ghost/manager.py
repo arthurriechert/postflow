@@ -20,7 +20,8 @@ class GhostManager:
             header (json): Important information for interacting with Ghost API
 
         """
-        self.session, self.headers = self.log_in()
+        self.session, self.headers, self.domain = self.log_in()
+        content.get_slugs(self.session, self.headers, self.domain)
 
     def log_in(self):
         """
@@ -42,5 +43,5 @@ class GhostManager:
         # Get session with credentials
         session, headers = get_session_cookie(username, password, domain)
 
-        return session, headers
+        return session, headers, domain
 
