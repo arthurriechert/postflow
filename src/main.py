@@ -8,4 +8,8 @@ if __name__ == "__main__":
     
     openai_model = OpenAIModel() 
 
+    response = openai_model.get_chat_response(message=[{"role": "user", "content": "hello"}])
+
+    print(response)
+    
     cli()
