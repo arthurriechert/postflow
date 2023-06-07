@@ -100,3 +100,15 @@ def get_titles(session, headers, domain: str):
     {titles}""")
 
     return titles
+
+def create_draft(session, headers, domain: str, html: str):
+    """
+    Creates a draft for a Ghost article.
+
+    Args:
+        session (Session): Verified session instance
+        headers (json): Important information for getting requests
+        domain (str): Domain of ghost blog
+        html (str): Blog post formatted in HTML
+    """
+    pass

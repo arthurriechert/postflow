@@ -25,4 +25,17 @@ def run_single_update ():
     # Get a json containing topics
     topics = prompt.get_new_idea(description=description, current=ghost.titles, model=llm)
 
+    # Print diagnostics
     print(f"\n\033[32mRetrieved the following topics: {topics}\033[0m")
+
+    # Get outline
+    outline = prompt.get_outline(f"{topics}", llm)
+
+    # Print diagnostics
+    print(f"\n\033[32mRetrieved the following outline: {outline}\033[0m")
+
+    # Write blog post as string
+    article = prompt.write_blog_post(outline, llm)
+
+    # Print diagnostics
+    print(f"\n033[32mRetrieved the following article: {article}\033[0m")
