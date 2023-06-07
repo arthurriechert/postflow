@@ -55,8 +55,8 @@ class OpenAIModel:
         
         # Format request and send
         response = self.llm.ChatCompletion.create(
-            engine = self.chat_model,
-            prompt = message,
+            model = self.chat_model,
+            messages = message,
             temperature = self.temperature,
             max_tokens = self.max_tokens
         )
@@ -80,7 +80,7 @@ class OpenAIModel:
 
         # Format request and send
         reponse = self.llm.Completion.create(
-            engine = self.completion_model,
+            model = self.completion_model,
             prompt = message,
             temperature = self.temperature,
             max_tokens = self.max_tokens
