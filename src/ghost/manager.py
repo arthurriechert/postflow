@@ -18,10 +18,13 @@ class GhostManager:
         Vars:
             session (str): Store instance of requests.Session
             header (json): Important information for interacting with Ghost API
+            slugs (list): Contains list of slugs on the blog
+            titles (list): Contains list of article titles
 
         """
         self.session, self.headers, self.domain = self.log_in()
-        content.get_slugs(self.session, self.headers, self.domain)
+        self.slugs = content.get_slugs(self.session, self.headers, self.domain)
+        self.titles = content.get_titles(self.session, self.headers, self.domain)
 
     def log_in(self):
         """
