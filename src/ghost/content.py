@@ -1,4 +1,5 @@
 from parse import parse_json, flatten, remove_duplicate_elements
+import json as js
 
 def get_post(slug: str, session, headers, domain: str):
     """
@@ -101,14 +102,35 @@ def get_titles(session, headers, domain: str):
 
     return titles
 
-def create_draft(session, headers, domain: str, html: str):
+def post_article(session, headers, domain: str, json: str, title: str):
     """
-    Creates a draft for a Ghost article.
+    Creates and posts and article for a Ghost article.
 
     Args:
         session (Session): Verified session instance
         headers (json): Important information for getting requests
         domain (str): Domain of ghost blog
-        html (str): Blog post formatted in HTML
+        json (str): Blog post formatted in json
+        title (str): Title of the article
+    
     """
-    pass
+    
+    # Build url endpoint
+    url = f"https://{domain}.ghost.io/ghost/api/admin/posts"
+
+    # Build payload
+    payload = {
+        "posts": [
+            {
+                "title": title,
+                "mobiledoc": js.dumps(json),
+                "status": "published"
+            }
+        ]
+    }
+
+    # Publish
+    status = session.post(url, headers=headers, data=json)
+
+    # Print diagnostics
+    print(f"Attempted to post. STATUS: {status}\nMESSAGE: {status.text}")

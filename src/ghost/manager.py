@@ -48,3 +48,15 @@ class GhostManager:
 
         return session, headers, domain
 
+    def post_article(self, json, title:str):
+        """
+        Posts article to blog
+
+        Args:
+            json (json): Contains the article
+            title (str): Name of the article
+
+        """
+
+        # Send request
+        content.post_article(self.session, self.headers, self.domain, json, title)

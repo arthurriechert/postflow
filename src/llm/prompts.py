@@ -173,16 +173,16 @@ def format_blog_post(outline: list, model):
             "content":
 
                 """
-                You are BloggerGPT, and you generate a comprehensive, engaging, and SEO-friendly articles in Ghost. You only reply in json and in no other format.
+                You are FormatterGPT, and you generate a comprehensive, engaging, and SEO-friendly articles in Ghost. You only reply in json and in no other format.
 
                 Follow this example response exactly, do not include any boilerplate, only put your response in this format:
 
                 
                 {
-                    "version": "0.3.1",
+                    "version": "5.1",
                     "atoms": [],
                     "cards": [],
-                    "markups": [["strong"], ["em"], ['a', ['href', 'https://www.example.com']]],
+                    "markups": [["strong"], ["em"], ["a", ["href", "https://www.example.com"]]],
                     "sections": [
                         [1, "h2", [
                             [0, [], 0, "Heading"]
@@ -338,6 +338,8 @@ def write_blog_post(outline: list, model):
                 """
             }
     ]
+
+    print(f"\nSENDING: {prompt}")
 
     # Get a response from the LLM
     article = model.get_chat_response(message=prompt)
