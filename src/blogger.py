@@ -27,7 +27,7 @@ def run_single_update ():
     topics = prompt.get_new_idea(description=description, current=ghost.titles, model=llm)
 
     # Get title
-    title = parse_json(topics, "title")
+    title  = parse_json(topics, "title")[0]
 
     # Print diagnostics
     print(f"\n\033[32mRetrieved the following topics: {topics}\033[0m")
@@ -45,10 +45,24 @@ def run_single_update ():
     print(f"\n033[32mRetrieved the following article: {article}\033[0m")
 
     # Format the blog post for uploading
-    formatted_article = prompt.format_blog_post(article, llm)
+    formatted_article = prompt.format_blog_post(article, llm, title)
+
+    print(f"Formatted Article:\n{formatted_article}")
+
+    """
+    formatted_article = {
+        "posts": [
+            {
+                "title": "My test post",
+                "mobiledoc": "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"My post content. Work in progress...\"]]]]}",
+                "status": "draft"
+            }
+        ]
+    }
+    """
 
     # Print diagnostics
-    print(formatted_article)
+    print(f'\033[32mFORMATTED ARTICLE: {formatted_article}')
 
     # Post the article
-    ghost.post_article(json=formatted_article, title=title)
+    ghost.post_article(json=formatted_article)
