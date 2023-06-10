@@ -102,7 +102,7 @@ def get_titles(session, headers, domain: str):
 
     return titles
 
-def post_article(session, headers, domain: str, json: str, title: str):
+def post_article(session, headers, domain: str, json):
     """
     Creates and posts and article for a Ghost article.
 
@@ -111,26 +111,16 @@ def post_article(session, headers, domain: str, json: str, title: str):
         headers (json): Important information for getting requests
         domain (str): Domain of ghost blog
         json (str): Blog post formatted in json
-        title (str): Title of the article
     
     """
     
     # Build url endpoint
-    url = f"https://{domain}.ghost.io/ghost/api/admin/posts"
+    url = f"https://{domain}.ghost.io/ghost/api/admin/posts/?source=html"
 
-    # Build payload
-    payload = {
-        "posts": [
-            {
-                "title": title,
-                "mobiledoc": js.dumps(json),
-                "status": "published"
-            }
-        ]
-    }
+    print(f"POSTING TO GHOST:\n\033[32m {json}\033[0m")
 
     # Publish
-    status = session.post(url, headers=headers, data=json)
+    status = session.post(url, headers=headers, json=json)
 
     # Print diagnostics
-    print(f"Attempted to post. STATUS: {status}\nMESSAGE: {status.text}")
+    print(f"ATTEMPTED TO POST WITH STATUS: {status}")
