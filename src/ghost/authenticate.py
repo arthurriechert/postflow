@@ -38,6 +38,6 @@ def get_session_cookie(username, password, domain):
     if cookie.status_code == 201:
         print("\n\033[32mSession created successfully\033[0m")
     else:
-        print(f"\n\033[31mFailed to create session. STATUS CODE: {response.status_code}\033[0m")
+        print(f"\n\033[31mFailed to create session. STATUS CODE: {cookie.status_code}\033[0m")
 
     return session, headers
