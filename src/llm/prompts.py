@@ -152,7 +152,7 @@ def get_new_idea(description: str, current: str, model):
     return idea
 
 
-def format_blog_post(outline: list, model):
+def format_blog_post(html, model, title):
     """
     Prompt to generate a list of steps to complete the goal
 
@@ -164,79 +164,16 @@ def format_blog_post(outline: list, model):
         article_idea (json): Generates a new idea to use
 
     """
-
-    # Format prompt as a list of dictionaries
-    prompt = [
-        {
-            "role": "system",
-
-            "content":
-
-                """
-                You are FormatterGPT, and you generate a comprehensive, engaging, and SEO-friendly articles in Ghost. You only reply in json and in no other format.
-
-                Follow this example response exactly, do not include any boilerplate, only put your response in this format:
-
-                
-                {
-                    "version": "5.1",
-                    "atoms": [],
-                    "cards": [],
-                    "markups": [["strong"], ["em"], ["a", ["href", "https://www.example.com"]]],
-                    "sections": [
-                        [1, "h2", [
-                            [0, [], 0, "Heading"]
-                        ]],
-                        [1, "p", [
-                            [0, [], 0, "This is a paragraph with "],
-                            [0, [0], 1, "bold"],
-                            [0, [], 0, " and "],
-                            [0, [1], 1, "italic"],
-                            [0, [], 0, " text."]
-                        ]],
-                        [3, "ul", [
-                            [[0, [], 0, "List item 1"]],
-                            [[0, [], 0, "List item 2"]]
-                        ]],
-                        [1, "blockquote", [
-                            [0, [], 0, "This is a quote."]
-                        ]],
-                        [1, "p", [
-                            [0, [], 0, "This is a link to "],
-                            [0, [2], 1, "example.com"],
-                            [0, [], 0, "."]
-                        ]]
-                    ]
-                }       
-
-                """
-            },
-        {
-            "role": "user",
-
-            "content":
-
-                f"""
-                Give me a json based on this article draft of my blog post and must use every part of the draft.
-                {outline}
-                """
+    
+    article = {
+        "posts": [
+            {
+                "title": title,
+                "html": html,
+                "status": "published"
             }
-    ]
-
-    # Get a response from the LLM
-    article = model.get_chat_response(message=prompt)
-
-    # Parse output
-    article = parse_json(article, "content") 
-
-    # Flatten list
-    article = flatten(article)
-
-    # Convert a list to a string
-    article = list_to_str(article)
-
-    # Convert to json
-    article = str_to_json(article)
+        ]
+    }
 
     return article
 
@@ -268,8 +205,7 @@ def get_outline(details: str, model):
                 1) Comprehensive
                 2) Cohesive
                 3) Organized for SEO
-                4) Makes use of subheadings
-                5) Only in json
+                4) Only in json
                 """
             },
         {
@@ -324,7 +260,18 @@ def write_blog_post(outline: list, model):
             "content":
 
                 """
-                You are BloggerGPT, and you generate a comprehensive, engaging, and SEO-friendly articles in Ghost. Make sure to distinguish between lists, headings, and subheadingsl
+                You are BloggerGPT, and you generate a comprehensive, engaging, and SEO-friendly articles in Ghost.
+                
+                You only reply in HTML and in no other format.
+                
+                These are the only tags you are allowed to use:
+                - paragraph
+                - heading
+                - strong
+                - em
+                - ordered list
+                - unordered list
+
                 """
             },
         {
@@ -333,7 +280,7 @@ def write_blog_post(outline: list, model):
             "content":
 
                 f"""
-                Give me a fully-written article based on this article outline of my blog post and must use every part of the outline.
+                Give me a fully-written article based on this article outline of my blog post.
                 {outline}
                 """
             }
