@@ -33,7 +33,7 @@ def run_single_update ():
     print(f"\n\033[32mRetrieved the following topics: {topics}\033[0m")
 
     # Get outline
-    outline = prompt.get_outline(f"{topics}", llm)
+    outline = prompt.get_post_outline(f"{topics}", llm)
 
     # Print diagnostics
     print(f"\n\033[32mRetrieved the following outline: {outline}\033[0m")
