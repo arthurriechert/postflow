@@ -49,18 +49,6 @@ def run_single_update ():
 
     print(f"Formatted Article:\n{formatted_article}")
 
-    """
-    formatted_article = {
-        "posts": [
-            {
-                "title": "My test post",
-                "mobiledoc": "{\"version\":\"0.3.1\",\"atoms\":[],\"cards\":[],\"markups\":[],\"sections\":[[1,\"p\",[[0,[],0,\"My post content. Work in progress...\"]]]]}",
-                "status": "draft"
-            }
-        ]
-    }
-    """
-
     # Print diagnostics
     print(f'\033[32mFORMATTED ARTICLE: {formatted_article}')
 
