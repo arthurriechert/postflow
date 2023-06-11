@@ -62,7 +62,7 @@ class OpenAIModel:
         )
 
         # Parse reponse
-        reponse = response["choices"][0]["message"]["content"]
+        response = parse_json(response, "content")#response["choices"][0]["message"]["content"]
 
         return response
 
@@ -90,3 +90,47 @@ class OpenAIModel:
         response = response.choices[0].text.strip()
 
         return response
+
+    def vectorize(self, text):
+        """
+        Sends a string to OpenAI embedding model and returns a vector
+
+        Args:
+            text (str or list): String to vectorize
+            json_parser (function): A function that can parse json
+
+        Returns:
+            vectors (list): Vector returned by embeding model
+
+        """
+
+        # Check if we are sending a list or string
+        if isinstance(text, str):
+            
+            # Print diagnostic
+            print(f"\nVectorizing: {text}")
+
+            # Get embedding
+            embedding = self.llm.Embedding.create(
+                input=text,
+                model=self.embedding_model
+            )
+
+            # Parse JSON
+            vectors = ["data"][0]["embedding"]
+
+            return vector
+            
+        elif isinstance(text, list):
+
+            # Print diagnostic
+            print(f"\nVectorizing: {[i for i in text]}")
+
+            # Recursively iterate over to get individual embeddings
+            for string in text:
+
+                vectors = []
+
+                vectors.append(vectorize(string))
+
+                return vectors
