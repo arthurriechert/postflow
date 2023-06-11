@@ -86,4 +86,30 @@ def load_db(path: str):
 
         return "Argggh! You flubbed up", False
         
-        
+
+def save_to_db(vectors, path: str):
+    """
+    Saves vectors to a FAISS index file
+
+    Args:
+        vectors (list): A list of embeddings received from ChatGPT
+        path (str): Location of the index
+
+    Returns:
+        None 
+
+    """
+    
+    # Attempt to locate exists db
+    index, exists = load_db(path)
+
+    # Create new index file
+    if exists:
+        index.add(vectors)
+        faiss.write_index(vectors, path)
+        print(f"\nSuccessfully saved vectors to: {path}")
+    else:
+        create_new_db(vectors, path)
+        print(f"\nFailed to find index. Created new vector database at {path}")
+
+
