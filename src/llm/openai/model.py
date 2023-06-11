@@ -117,20 +117,22 @@ class OpenAIModel:
             )
 
             # Parse JSON
-            vectors = ["data"][0]["embedding"]
+            vectors = embedding["data"][0]["embedding"]
 
-            return vector
+            return vectors
             
         elif isinstance(text, list):
 
             # Print diagnostic
             print(f"\nVectorizing: {[i for i in text]}")
 
+            vectors = []
+
             # Recursively iterate over to get individual embeddings
             for string in text:
 
-                vectors = []
+                vectors.append(self.vectorize(string))
 
-                vectors.append(vectorize(string))
+            print(f"Retrieved list of {len(vectors)} embeddings")
 
-                return vectors
+            return vectors
