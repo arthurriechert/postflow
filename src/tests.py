@@ -15,7 +15,19 @@ def test_toolkit():
     
     """
 
-    tool.create_default_toolkit()
+    # tool.create_default_toolkit()
+
+    tools = tool.load_toolkit()
+
+    print(tools)
+
+    # a_tool = tool.load_tool("Google")
+
+    # print(a_tool)
+
+    llm = OpenAIModel()
+
+    tool.vectorize_tools(tools, llm)
 
 
 def test_openai_vectorize ():
