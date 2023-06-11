@@ -7,6 +7,9 @@ import numpy as np
 # Checking files
 import os
 
+# Logging changes
+import json
+
 def create_new_db(vectors, path:str):
     """
     Creates a new faiss index
@@ -37,7 +40,6 @@ def create_new_db(vectors, path:str):
 
     # Print diagnostics
     print(f"\nCreated new FAISS index at path: {path} and with {index.ntotal} entries.")
-
 
 def db_exists(path: str):
     """
@@ -105,11 +107,36 @@ def save_to_db(vectors, path: str):
 
     # Create new index file
     if exists:
-        index.add(vectors)
-        faiss.write_index(vectors, path)
+        index.add(np.array(vectors))
+        faiss.write_index(index, path)
         print(f"\nSuccessfully saved vectors to: {path}")
     else:
         create_new_db(vectors, path)
         print(f"\nFailed to find index. Created new vector database at {path}")
 
 
+def query_db(query: str, llm, k: int, path: str):
+    """
+    Perform an L2 similarity search over FAISS index
+
+    Args:
+        query (str): A question to encode and ask the db
+        llm: An AI model to encode the query
+        k (int): The number of neighbors to return
+        path (str): Path where the db is located
+
+    Return:
+        indices (ndarray): Np array containing indices for nearest neighbors
+
+    """
+
+    # Get embedding
+    embedding = np.array(llm.vectorize(query)).reshape(1, -1)
+
+    # Load db
+    index,_ = load_db(path)
+
+    # Do search
+    _,indices = index.search(embedding, k)
+
+    return indices

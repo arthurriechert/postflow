@@ -17,9 +17,9 @@ def test_toolkit():
 
     # tool.create_default_toolkit()
 
-    tools = tool.load_toolkit()
+    # tools = tool.load_toolkit()
 
-    print(tools)
+    # print(tools)
 
     # a_tool = tool.load_tool("Google")
 
@@ -27,8 +27,11 @@ def test_toolkit():
 
     llm = OpenAIModel()
 
-    tool.vectorize_tools(tools, llm)
+    # tool.vectorize_tools(tools, llm)
 
+    desired_tool = tool.find_tool("I want to search the Internet", llm)
+    
+    print(desired_tool)
 
 def test_openai_vectorize ():
     """
