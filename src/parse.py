@@ -12,6 +12,8 @@ def str_to_json(string: str):
 
     """
 
+    print(f"Here's you STRING: {string}") 
+
     # Load using json
     json = js.loads(string)
 

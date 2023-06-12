@@ -5,6 +5,8 @@ import json
 
 from dotenv import load_dotenv
 
+from parse import parse_json
+
 class OpenAIModel:
     """
     Creates a class that will get completions or response from ChatGPT
@@ -62,7 +64,7 @@ class OpenAIModel:
         )
 
         # Parse reponse
-        response = parse_json(response, "content")#response["choices"][0]["message"]["content"]
+        # response = parse_json(response, "content")#response["choices"][0]["message"]["content"]
 
         return response
 

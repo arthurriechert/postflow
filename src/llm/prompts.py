@@ -138,11 +138,17 @@ def get_new_idea(description: str, current: str, model):
     # Get a response from the LLM
     idea = model.get_chat_response(message=prompt)
 
+    print(idea) 
+
     # Parse output
     idea = parse_json(idea, "content") 
 
+    print(idea) 
+
     # Flatten list
     idea = flatten(idea)
+
+    print(f"HERE'S YOUR IDEA: {idea}") 
 
     # Convert a list to a string
     idea = list_to_str(idea)
