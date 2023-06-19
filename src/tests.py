@@ -2,6 +2,7 @@ from ghost.manager import GhostManager
 from llm.openai.model import OpenAIModel
 import tools.load_tools as tool
 
+import llm.openai.chat as chat
 import llm.prompts as prompt
 import settings as sg
 from parse import parse_json
@@ -44,10 +45,19 @@ def test_openai_vectorize ():
 
     print(llm.vectorize(["Hello", "World"]))   
 
+def test_openai_chat ():
+    test_message = "Hello"
+
+    response = chat.chat(test_message)
+
+    print(response)
+
 if __name__=="__main__":
 
     load_dotenv()
 
     #test_openai_vectorize()
 
-    test_toolkit()
+    #test_toolkit()
+
+    test_openai_chat()

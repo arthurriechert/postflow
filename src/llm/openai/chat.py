@@ -3,18 +3,19 @@ import time
 import json
 import os
 from typing import Optional
-from parse import parse_json
+from parse import parse_json, flatten
 
-def start_history(system_seed: str, user_seed: str, path: str = "./llm/openai/chat_history.json") -> None:
-    if not os.path.exists(path):
+def start_history(system_seed: str, user_seed: str, path: str = "./llm/openai/chat_history.json") -> Optional[int]:
+    if os.path.exists(path):
         return None
     
+    print(f"\n\033[33mCreating a new chat history at {path}\033[0m")
     with open(path, 'w') as file:
         json.dump([{"role": "system", "content": system_seed},{"role": "user", "content": user_seed}], file)
 
     print(f"\n\033[32mCreated a new chat history at {path}\033[0m") 
 
-    return None
+    return 1
 
 
 def destroy_history(path: str = "./llm/openai/chat_history.json") -> None:
@@ -50,14 +51,15 @@ def chat(new_message: str, role: str = "user") -> Optional[str]:
     
     llm = OpenAIModel()
 
-    history = read_history()
+    if not start_history(system_seed="You are an assistant and will answer any questions asked of you", user_seed=new_message):
+        append_history([{"role": role, "content": new_message}])
 
-    history.extend({"role": role, "content": new_message})
+    history = read_history() 
 
     response = llm.get_chat_response(history)
 
-    assistant_response = parse_json(response, "content")
+    assistant_response = flatten(parse_json(response, "content"))[0]
 
-    history.extend({"role": assistant, "content": assistant_response})
+    append_history([{"role": "assistant", "content": assistant_response}])
 
     return assistant_response
